@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="grid_thumb_size">100dp</dimen>
+    <dimen name="grid_thumb_textheight">20dp</dimen>
     <dimen name="grid_thumb_spacing">1dp</dimen>
 </resources>

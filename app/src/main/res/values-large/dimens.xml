@@ -1,5 +1,6 @@
 <resources>
 
     <dimen name="grid_thumb_size">148dp</dimen>
+    <dimen name="grid_thumb_textheight">29dp</dimen>
     <dimen name="grid_thumb_spacing">2dp</dimen>
 </resources>

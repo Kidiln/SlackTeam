@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class PreferenceHelper {
+public class SLPreferenceHelper {
 
 	public synchronized static void putToPreference(Context context,
 			String key, Object value) {
