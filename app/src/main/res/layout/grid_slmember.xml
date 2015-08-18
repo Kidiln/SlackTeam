@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:id="@+id/fmlt_memberlayout"
+    android:layout_width="@dimen/grid_thumb_size"
+    android:layout_height="@dimen/grid_thumb_size"
+    android:background="@color/sl_translucent"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <ImageView
+        android:id="@+id/grid_membericon"
         android:layout_width="@dimen/grid_thumb_size"
         android:layout_height="@dimen/grid_thumb_size"
-        android:id="@+id/grid_membericon"/>
+        android:background="@drawable/empty_photo"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/empty_photo" />
 
     <TextView
+        android:id="@+id/grid_membername"
+        style="@style/TextGridTitle"
         android:layout_width="@dimen/grid_thumb_size"
         android:layout_height="@dimen/grid_thumb_textheight"
-        android:id="@+id/grid_membername"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 
 </FrameLayout>
