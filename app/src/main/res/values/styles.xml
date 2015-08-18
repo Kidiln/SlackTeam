@@ -12,4 +12,30 @@
         <item name="android:drawSelectorOnTop">true</item>
         <item name="android:listSelector">@drawable/grid_list_selector</item>
     </style>
+
+    <style name="TextGridTitle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/grid_text_background</item>
+    </style>
+
+    <style name="TextMemberForm">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme_Progress_Dialog" parent="android:Theme.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/sl_translucent</item>
+    </style>
+
+    <style name="TextSplashTitle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

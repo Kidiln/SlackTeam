@@ -2,4 +2,7 @@
 <resources>
     <color name="grid_state_pressed">#1Affffff</color>
     <color name="grid_state_focused">#80000000</color>
+
+    <color name="grid_text_background">#80aaaaaa</color>
+    <color name="sl_translucent">#BB000000</color>
 </resources>

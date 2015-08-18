@@ -4,13 +4,24 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Cache-->
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+    <string name="no_network_connection_toast">No network connection found</string>
+
     <!-- Splash Screen-->
     <string name="txt_splash_title">SlackTeam</string>
     <string name="txt_splash_desc">Meet the team</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_slteam">SLTeamActivity</string>
 
 
+    <!-- Progress Screen-->
 
+    <string name="fetch_progress">Fetching Contacts...</string>
+
+    <!-- Member Dialog Screen-->
+
+    <string name="dlg_fullname">Full Name : </string>
+    <string name="dlg_call">Phone : </string>
+    <string name="dlg_email">Email : </string>
+    <string name="dlg_timezone">Timezone : </string>
 
 </resources>
