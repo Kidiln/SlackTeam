@@ -50,7 +50,7 @@ public class SLTeamImageAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // If columns have yet to be determined, return no items
-        if (getNumColumns() == 0) {
+        if (mSLMembers == null || getNumColumns() == 0) {
             return 0;
         }
 
@@ -61,7 +61,7 @@ public class SLTeamImageAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
 
-        return mSLMembers[position].getProfile().getImage_72();
+        return mSLMembers == null ? null : mSLMembers[position].getProfile().getImage_72();
 //        return position < mNumColumns ?
 //                null : mSLMembers[position - mNumColumns].getProfile().getImage_72();
     }
@@ -76,11 +76,6 @@ public class SLTeamImageAdapter extends BaseAdapter {
 //        // Two types of views, the normal ImageView and the top row of empty views
 //        return 2;
 //    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return (position < mNumColumns) ? 1 : 0;
-    }
 
     @Override
     public boolean hasStableIds() {
@@ -118,7 +113,11 @@ public class SLTeamImageAdapter extends BaseAdapter {
 
         // Finally load the image asynchronously into the ImageView, this also takes care of
         // setting a placeholder image while the background thread runs
-        mImageFetcher.loadImage(mSLMembers[position].getProfile().getImage_192(), imageView);
+//        if(mSLMembers == null) {
+//
+//        } else {
+            mImageFetcher.loadImage(mSLMembers[position].getProfile().getImage_192(), imageView);
+//        }
         return imageView;
         //END_INCLUDE(load_gridview_item)
     }

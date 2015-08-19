@@ -6,9 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.slack.slackteam.R;
+import com.slack.slackteam.cache.ImageFetcher;
 import com.slack.slackteam.model.SLMember;
 import com.slack.slackteam.utils.SLUtils;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by jacobkoikkara on 8/14/15.
@@ -20,6 +20,7 @@ public class SLMemberDialog implements SLDialog {
     private Context mContext = null;
     private Dialog mSLDialog = null;
     private SLMember mSLMember = null;
+    private ImageFetcher mImageFetcher = null;
 
     private TextView txtFullName = null;
     private ImageView imgMemberIcon = null;
@@ -34,6 +35,13 @@ public class SLMemberDialog implements SLDialog {
 
         this.mContext = context;
         this.mSLMember = slMember;
+    }
+
+    public SLMemberDialog(Context context, ImageFetcher imageFetcher, SLMember slMember) {
+
+        this.mContext = context;
+        this.mSLMember = slMember;
+        this.mImageFetcher = imageFetcher;
     }
 
     @Override
@@ -68,19 +76,24 @@ public class SLMemberDialog implements SLDialog {
         SLUtils.showLog(mSLMember.getProfile().getImage_192());
         SLUtils.showLog(mSLMember.getReal_name());
 
-                txtTitle.setText(mSLMember.getProfile().getTitle());
+        txtTitle.setText(mSLMember.getProfile().getTitle());
         txtFullName.setText(appendInputToView(txtFullName, mSLMember.getReal_name()));
         txtCall.setText(appendInputToView(txtCall, mSLMember.getProfile().getPhone()));
         txtTimeZone.setText(appendInputToView(txtTimeZone, mSLMember.getTz()));
         txtEmail.setText(appendInputToView(txtEmail, mSLMember.getProfile().getEmail()));
 
-        Picasso.with(mContext)
-                .load(mSLMember.getProfile().getImage_192())
-                .placeholder(R.drawable.empty_photo)   // optional
-                .error(R.drawable.empty_photo)    // optional
-//                .resize(mItemHeight, mItemHeight)                        // optional
-//                .rotate(90)                             // optional
-                .into(imgMemberIcon);
+//        Picasso.with(mContext)
+//                .load(mSLMember.getProfile().getImage_192())
+//                .placeholder(R.drawable.empty_photo)   // optional
+//                .error(R.drawable.empty_photo)    // optional
+////                .resize(mItemHeight, mItemHeight)                        // optional
+////                .rotate(90)                             // optional
+//                .into(imgMemberIcon);
+
+        // Finally load the image asynchronously into the ImageView, this also takes care of
+        // setting a placeholder image while the background thread runs
+        mImageFetcher.loadImage(mSLMember.getProfile().getImage_192(), imgMemberIcon);
+
 
     }
 
@@ -94,6 +107,10 @@ public class SLMemberDialog implements SLDialog {
         }
         strInput.append(strEntry);
         return strInput.toString();
+    }
+
+    public void setImageFetcherForDialog(ImageFetcher imgFetcher) {
+        mImageFetcher = imgFetcher;
     }
 
 }

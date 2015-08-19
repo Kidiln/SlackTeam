@@ -20,7 +20,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.slack.slackteam.BuildConfig;
 import com.slack.slackteam.R;
-import com.slack.slackteam.adapter.SLTeamGridAdapter;
 import com.slack.slackteam.adapter.SLTeamImageAdapter;
 import com.slack.slackteam.cache.DataCache;
 import com.slack.slackteam.cache.ImageCache;
@@ -43,28 +42,25 @@ import retrofit.converter.GsonConverter;
 
 public class SLTeamActivity extends SLBaseActivity {
 
+    private static final String TAG = "SLTeamActivity";
+    private static final String IMAGE_CACHE_DIR = "thumbs";
     private SLDialogFactory mDlgFactory = null;
     private SLMember[] mSLMembers = null;
-
+    private GridView grdSLTeam;
+    //    private SLTeamGridAdapter adapter;
+    private int mImageThumbSize;
+    private int mImageThumbSpacing;
+    private SLTeamImageAdapter mAdapter;
+    private ImageFetcher mImageFetcher;
 
     private AdapterView.OnItemClickListener gridItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             SLUtils.showLog(position);
-            mDlgFactory.showDialogBasedOnType(SLDialogConstants.DialogConstants.DLG_MEMBER, null, mSLMembers[position]);
+            mDlgFactory.showDialogBasedOnType(SLDialogConstants.DialogConstants.DLG_MEMBER, mImageFetcher, mSLMembers[position]);
         }
     };
-
-    private static final String TAG = "SLTeamActivity";
-    private GridView grdSLTeam;
-    private SLTeamGridAdapter adapter;
-
-    private static final String IMAGE_CACHE_DIR = "thumbs";
-    private int mImageThumbSize;
-    private int mImageThumbSpacing;
-    private SLTeamImageAdapter mAdapter;
-    private ImageFetcher mImageFetcher;
 
     private Callback<SLMember[]> retroCallback = new Callback<SLMember[]>() {
         @Override
@@ -128,6 +124,10 @@ public class SLTeamActivity extends SLBaseActivity {
 
     protected void initialiseValues() {
 
+        grdSLTeam = (GridView) findViewById(R.id.grd_team);
+
+        mDlgFactory = getDlgFactoryInstance();
+
 //        DisplayMetrics metrics = new DisplayMetrics();
 //        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 //
@@ -148,11 +148,6 @@ public class SLTeamActivity extends SLBaseActivity {
         mImageFetcher = new ImageFetcher(SLTeamActivity.this, mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
         mImageFetcher.addImageCache(SLTeamActivity.this.getSupportFragmentManager(), cacheParams);
-
-        grdSLTeam = (GridView) findViewById(R.id.grd_team);
-
-        mDlgFactory = getDlgFactoryInstance();
-
 
     }
 
@@ -179,7 +174,7 @@ public class SLTeamActivity extends SLBaseActivity {
 
         if (slMembers == null) {
             try {
-                slMembers = (SLMember[]) DataCache.readObject(SLTeamActivity.this, SLConstants.CACHE_FILE_NAME);
+                mSLMembers = (SLMember[]) DataCache.readObject(SLTeamActivity.this, SLConstants.CACHE_FILE_NAME);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -187,7 +182,7 @@ public class SLTeamActivity extends SLBaseActivity {
             }
         }
 
-        mAdapter = new SLTeamImageAdapter(SLTeamActivity.this, mImageFetcher, slMembers);
+        mAdapter = new SLTeamImageAdapter(SLTeamActivity.this, mImageFetcher, mSLMembers);
 
         grdSLTeam.setAdapter(mAdapter);
         grdSLTeam.setOnItemClickListener(gridItemListener);
@@ -243,22 +238,6 @@ public class SLTeamActivity extends SLBaseActivity {
                         }
                     }
                 });
-
-//        adapter = new SLTeamGridAdapter(SLTeamActivity.this, slMembers);
-//
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//
-//        int width = metrics.widthPixels;
-//        int height = metrics.heightPixels;
-//
-////        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
-//        int mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.grid_thumb_spacing);
-//        grdSLTeam.setColumnWidth(width/2 - mImageThumbSpacing);
-//        adapter.setWidthAndHeight(width/2 - mImageThumbSpacing, height);
-//
-//        grdSLTeam.setAdapter(adapter);
-//        grdSLTeam.setOnItemClickListener(gridItemListener);
 
     }
 

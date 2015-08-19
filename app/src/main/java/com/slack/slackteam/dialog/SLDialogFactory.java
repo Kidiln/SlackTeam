@@ -2,7 +2,9 @@ package com.slack.slackteam.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.Image;
 
+import com.slack.slackteam.cache.ImageFetcher;
 import com.slack.slackteam.model.SLMember;
 
 /**
@@ -19,14 +21,14 @@ public class SLDialogFactory {
     }
 
     public void showDialogBasedOnType(int dialogType,
-                                      SLDialogListener dlgListeners, SLMember member) {
+                                      ImageFetcher imageFetcher, SLMember member) {
 
         switch (dialogType) {
             case SLDialogConstants.DialogConstants.DLG_PROGRESS:
                 mSLDialog = new SLProgressDialog(mContext).generateDialog();
                 break;
             case SLDialogConstants.DialogConstants.DLG_MEMBER:
-                mSLDialog = new SLMemberDialog(mContext, member).generateDialog();
+                mSLDialog = new SLMemberDialog(mContext, imageFetcher, member).generateDialog();
                 break;
 
             default:
