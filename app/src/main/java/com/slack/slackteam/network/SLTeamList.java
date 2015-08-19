@@ -1,6 +1,6 @@
 package com.slack.slackteam.network;
 
-import com.slack.slackteam.Model.SLMember;
+import com.slack.slackteam.model.SLMember;
 
 import retrofit.Callback;
 import retrofit.http.GET;
