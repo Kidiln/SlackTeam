@@ -6,10 +6,12 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
+import com.slack.slackteam.R;
 
 /**
  * Created by jacobkoikkara on 8/11/15.
@@ -25,8 +27,6 @@ public class SLUtils {
     public static Toast mToast = null;
 
 
-
-
     public static final boolean hasNetworkSupport(Context ctx) {
         PackageManager packageManager = ctx.getPackageManager();
         return (packageManager
@@ -37,9 +37,8 @@ public class SLUtils {
      * Detects the availability of a working network connection to open a
      * http/https connection.
      *
-     * @param context
-     *            The context of the activity who is trying to check for the
-     *            status of the network.
+     * @param context The context of the activity who is trying to check for the
+     *                status of the network.
      * @return true if network is available, false otherwise.
      */
 
@@ -66,9 +65,8 @@ public class SLUtils {
      * Detects the availability of a working Wifi network connection to open a
      * http/https connection.
      *
-     * @param context
-     *            The context of the activity who is trying to check for the
-     *            status of the network.
+     * @param context The context of the activity who is trying to check for the
+     *                status of the network.
      * @return true if Wifi network is available, false otherwise.
      */
     public static boolean isWiFiAvailable(Context context) {
@@ -100,6 +98,22 @@ public class SLUtils {
         return manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+
+    /**
+     * Simple network connection check.
+     *
+     * @param context
+     */
+    public static boolean isNetworkConnected(Context context) {
+        final ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isConnectedOrConnecting()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Method for showing toast messages.
      *
@@ -120,6 +134,25 @@ public class SLUtils {
     }
 
     /**
+     * Method for showing toast messages.
+     *
+     * @param context
+     * @param resId
+     */
+    public static void showToast(Context context, int resId) {
+
+
+        if (ENABLE_TOAST) {
+            if (mToast == null) {
+                mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+            }
+            mToast.setText(context.getResources().getText(resId));
+            mToast.show();
+        }
+
+    }
+
+    /**
      * Method for showing Log messages.
      *
      * @param message
@@ -128,7 +161,7 @@ public class SLUtils {
 
 
         if (ENABLE_LOG) {
-            if(tag == null || tag.isEmpty()){
+            if (tag == null || tag.isEmpty()) {
                 Log.d(TAG_SL, String.valueOf(message));
             } else {
                 Log.d(tag, String.valueOf(message));
@@ -160,8 +193,30 @@ public class SLUtils {
     }
 
 
+    public static boolean hasFroyo() {
+        // Can use static final constants like FROYO, declared in later versions
+        // of the OS since they are inlined at compile time. This is guaranteed behavior.
+        return Build.VERSION.SDK_INT >= VERSION_CODES.FROYO;
+    }
+
+    public static boolean hasGingerbread() {
+        return Build.VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD;
+    }
+
+    public static boolean hasHoneycomb() {
+        return Build.VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
+    }
+
+    public static boolean hasHoneycombMR1() {
+        return Build.VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB_MR1;
+    }
+
     public static boolean hasJellyBean() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+        return Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN;
+    }
+
+    public static boolean hasKitKat() {
+        return Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT;
     }
 
 }
