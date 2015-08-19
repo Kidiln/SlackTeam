@@ -2,11 +2,8 @@ package com.slack.slackteam.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
 
 import com.slack.slackteam.R;
 
@@ -51,6 +48,7 @@ public class SLSplashActivity extends Activity {
 
         Intent launchIntent = new Intent(SLSplashActivity.this, SLTeamActivity.class);
         startActivity(launchIntent);
+        finish();
     }
 
 }

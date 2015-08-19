@@ -2,32 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/jacobkoikkara/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/gson-2.3.1-5d70f395982bd5165878b74eb1e9127eeca3b790.jar" />
-    </item>
-    <item
-        jar="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/classes-94a607591d0364f7881677505f94e1ce5690bb50.jar" />
-    </item>
-    <item
-        jar="/Users/jacobkoikkara/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-f65165f3306ba8aa06b88ad50d49154682bcea5b.jar" />
-    </item>
-    <item
         jar="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/jars/libs/internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
         <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-7aa83a3e9df7d4d23aec3b4d602c931846f7ec9c.jar" />
+    </item>
+    <item
+        jar="/Users/jacobkoikkara/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/gson-2.3.1-5d70f395982bd5165878b74eb1e9127eeca3b790.jar" />
     </item>
     <item
         jar="/Users/jacobkoikkara/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
@@ -49,6 +35,20 @@
         revision="21.1.2"
         sha1="d84409890828e07d344a3b9b1da545dba9897b51">
         <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/classes-257cf2a1d413b1704c730cba42caeb64ff68ca3c.jar" />
+    </item>
+    <item
+        jar="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/classes-94a607591d0364f7881677505f94e1ce5690bb50.jar" />
+    </item>
+    <item
+        jar="/Users/jacobkoikkara/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/Users/jacobkoikkara/Documents/workspace/SLTeam/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-f65165f3306ba8aa06b88ad50d49154682bcea5b.jar" />
     </item>
 
 </items>
