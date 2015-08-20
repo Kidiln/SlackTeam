@@ -2,7 +2,7 @@
     <string name="app_name">Slack Team</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_interact">Interact</string>
 
     <!-- Cache-->
     <string name="clear_cache_complete_toast">Caches have been cleared</string>
@@ -23,5 +23,18 @@
     <string name="dlg_call">Phone : </string>
     <string name="dlg_email">Email : </string>
     <string name="dlg_timezone">Timezone : </string>
+
+    <!-- Voice -->
+
+    <string name="vce_greeting1">Good Morning</string>
+    <string name="vce_greeting2">Good Afternoon</string>
+    <string name="vce_greeting3">Good Evening</string>
+    <string name="vce_greeting4">Hello</string>
+
+    <string name="vce_slackgreeting">Welcome to Slack Team</string>
+
+    <string name="vce_intro_askname">Please say name to show member details.</string>
+    <string name="vce_sorry1">I am sorry, unable to find member with that name.</string>
+    <string name="vce_sorry2">I am sorry, I couldn\'t find a member with the name </string>
 
 </resources>
