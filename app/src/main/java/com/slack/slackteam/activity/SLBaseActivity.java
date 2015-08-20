@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import com.slack.slackteam.dialog.SLDialogFactory;
 
 /**
- * Created by jacobkoikkara on 8/11/15.
+ * Base Activity class. Properties and values to be used for multiple activities can be implemented here.
  */
 public class SLBaseActivity extends ActionBarActivity {
 
@@ -20,6 +20,10 @@ public class SLBaseActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * Used for Returning Dialog Factory instance.
+     * @return : instance of SLDialogFactory
+     */
     protected SLDialogFactory getDlgFactoryInstance() {
         if (mDlgFactory == null) {
             mDlgFactory = new SLDialogFactory(SLBaseActivity.this);

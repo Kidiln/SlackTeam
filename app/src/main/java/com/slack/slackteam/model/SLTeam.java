@@ -4,19 +4,12 @@ import java.io.Serializable;
 
 /**
  * Created by jacobkoikkara on 8/12/15.
+ *
+ * POJO class for storing member details.
  */
 public class SLTeam implements Serializable{
 
-    //    private boolean ok = false;
     private SLMember[] members = null;
-
-//    public boolean isOk() {
-//        return ok;
-//    }
-//
-//    public void setOk(boolean ok) {
-//        this.ok = ok;
-//    }
 
     public SLMember[] getMembers() {
         return members;

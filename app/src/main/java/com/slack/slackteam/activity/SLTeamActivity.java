@@ -1,8 +1,14 @@
 package com.slack.slackteam.activity;
 
+
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +36,9 @@ import com.slack.slackteam.dialog.SLDialogFactory;
 import com.slack.slackteam.model.SLMember;
 import com.slack.slackteam.network.SLTeamList;
 import com.slack.slackteam.utils.SLUtils;
+import com.slack.slackteam.voice.VoiceInteractManager;
+import com.slack.slackteam.voice.VoiceInteractUtils;
+import com.slack.slackteam.voice.VoiceManagerToActivityListener;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -40,28 +49,45 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+/**
+ * Activity for showing all the Slack Team members. Layout contains
+ * a Gridview with itemclick listener, to show details of each member.
+ *
+ * Used Retrofit to fetch the values from webservice. Given token is also used.
+ *
+ * Voice interaction is also implemented.
+ *
+ */
 public class SLTeamActivity extends SLBaseActivity {
 
     private static final String TAG = "SLTeamActivity";
     private static final String IMAGE_CACHE_DIR = "thumbs";
-    private SLDialogFactory mDlgFactory = null;
-    private SLMember[] mSLMembers = null;
+
     private GridView grdSLTeam;
-    //    private SLTeamGridAdapter adapter;
     private int mImageThumbSize;
     private int mImageThumbSpacing;
+
+    private SLDialogFactory mDlgFactory = null;
+    private SLMember[] mSLMembers = null;
     private SLTeamImageAdapter mAdapter;
     private ImageFetcher mImageFetcher;
+    private VoiceInteractManager voiceManager;
 
+
+    /**
+     * Itemclick listener for gridview. Opens dialog for showing member details
+     */
     private AdapterView.OnItemClickListener gridItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            SLUtils.showLog(position);
-            mDlgFactory.showDialogBasedOnType(SLDialogConstants.DialogConstants.DLG_MEMBER, mImageFetcher, mSLMembers[position]);
+            doOnGridItemClick(position);
         }
     };
 
+    /**
+     * Retrofit call back listener, Member values are cached and grid view is populated.
+     */
     private Callback<SLMember[]> retroCallback = new Callback<SLMember[]>() {
         @Override
         public void success(SLMember[] slMembers, Response response) {
@@ -80,12 +106,35 @@ public class SLTeamActivity extends SLBaseActivity {
         }
     };
 
+    /**
+     * Listener for voice manager for controlling ui buttons while user
+     * interaction
+     */
+    VoiceManagerToActivityListener voiceFromMngrListener = new VoiceManagerToActivityListener() {
+
+        @Override
+        public void showVoiceUIResponse(final int memberPosition,
+                                        final boolean isShow) {
+
+            SLUtils.showLog("UI Dialog show type : " + memberPosition);
+            SLUtils.showLog("UI Dialog shown? : " + isShow);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    openMemberDetailPage(memberPosition, isShow);
+                }
+            });
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slteam);
 
         initialiseValues();
+        initialiseVoiceValues();
 
         if (SLUtils.isNetworkConnected(SLTeamActivity.this)) {
             callRetroTeamList();
@@ -102,6 +151,7 @@ public class SLTeamActivity extends SLBaseActivity {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
+        voiceManager.onActResumeCalled();
     }
 
     @Override
@@ -113,28 +163,34 @@ public class SLTeamActivity extends SLBaseActivity {
         mImageFetcher.setPauseWork(false);
         mImageFetcher.setExitTasksEarly(true);
         mImageFetcher.flushCache();
+
+        voiceManager.onActPauseCalled();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mImageFetcher.closeCache();
+
+        voiceManager.onActDestroyCalled();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    protected void initialiseValues() {
+        voiceManager.onActActivityResultCalled(requestCode, resultCode, data);
+    }
+
+    /**
+     * Method for initialising views and properties used in activity.
+     */
+    private void initialiseValues() {
 
         grdSLTeam = (GridView) findViewById(R.id.grd_team);
 
         mDlgFactory = getDlgFactoryInstance();
 
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//
-//        int width = metrics.widthPixels;
-//        int height = metrics.heightPixels;
-//
-//        mImageThumbSize = width/2;
         mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.grid_thumb_size);
         mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.grid_thumb_spacing);
 
@@ -151,6 +207,26 @@ public class SLTeamActivity extends SLBaseActivity {
 
     }
 
+    /**
+     * Method for initialising voice related properties in activity
+     */
+    private void initialiseVoiceValues() {
+
+        if (VoiceInteractUtils.isVoiceRecognitionPresent(this)) {
+            if (voiceManager == null) {
+                voiceManager = new VoiceInteractManager(SLTeamActivity.this);
+                voiceManager
+                        .setVoiceInteractionForStartListener(voiceFromMngrListener);
+            }
+             SLUtils.showToast(this, "Voice Recognition Enabled");
+        }
+
+    }
+
+
+    /**
+     * Method to call Retrofit api, to fetch members list.
+     */
     private void callRetroTeamList() {
 
         RestAdapter.Builder restBuilder = new RestAdapter.Builder().setEndpoint(SLConstants.LIST_URL);
@@ -170,6 +246,35 @@ public class SLTeamActivity extends SLBaseActivity {
         SLUtils.showLog(null, slTeamList.toString());
     }
 
+    /**
+     * Method called for opening member detail dialog.
+     * @param memberPosition : position of member in list.
+     * @param isShow : if dialog needs to be show
+     */
+    private void openMemberDetailPage(int memberPosition, boolean isShow) {
+
+        mDlgFactory.dismissSLDialog();
+
+        doOnGridItemClick(memberPosition);
+
+
+    }
+
+    /**
+     * Action to be performed upon click of grid item.
+     * @param position : position of click grid item
+     */
+    private void doOnGridItemClick(int position) {
+
+        SLUtils.showLog(position);
+        mDlgFactory.showDialogBasedOnType(SLDialogConstants.DialogConstants.DLG_MEMBER, mImageFetcher, mSLMembers[position]);
+    }
+
+    /**
+     * Method called for initialising adapter used for gridview. The members are fetched from cache file stored
+     * after fetching, if slMember == null
+     * @param slMembers : fetched member list
+     */
     private void setAdapterOnSuccess(SLMember[] slMembers) {
 
         if (slMembers == null) {
@@ -182,6 +287,7 @@ public class SLTeamActivity extends SLBaseActivity {
             }
         }
 
+        voiceManager.setmVoiceSLMembers(mSLMembers);
         mAdapter = new SLTeamImageAdapter(SLTeamActivity.this, mImageFetcher, mSLMembers);
 
         grdSLTeam.setAdapter(mAdapter);
@@ -256,13 +362,18 @@ public class SLTeamActivity extends SLBaseActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_interact) {
+
+            voiceManager.startVoiceInteraction();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Deserializer class used for getting pojo class for receied webservice response.
+     */
     class PhotosDeserializer implements JsonDeserializer<SLMember[]> {
         @Override
         public SLMember[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

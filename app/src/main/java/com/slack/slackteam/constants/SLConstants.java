@@ -1,7 +1,7 @@
 package com.slack.slackteam.constants;
 
 /**
- * Created by jacobkoikkara on 8/11/15.
+ * Constant class. Contains values to be used throught the application.
  */
 public class SLConstants {
 
@@ -9,6 +9,18 @@ public class SLConstants {
 
     public static final String CACHE_FILE_NAME = "SlackCache";
 
-//    public static final String LISTTOKEN_URL = "https://slack.com/api/users.list?token=xoxp-5048173296-5048346304-5180362684-7b3865";
+    public static final String APP_PACKAGE = "com.slack.slackteam";
 
+
+    // This code can be any value you want, its just a checksum.
+    public static final int VOICE_CODE = 1111;
+    public static final int VOICE_MAX_RESULTS = 4;
+    public static final int VOICERESULT_OK = -1;
+
+    public static final String UTTER1 = "SL_Greeting";
+    public static final int V_UTTER1 = 120;
+    public static final String UTTER2 = "SL_ConversationEnd";
+    public static final int V_UTTER2 = 121;
+
+    public static final String USER_VOICE_HINT = "Slack Name";
 }

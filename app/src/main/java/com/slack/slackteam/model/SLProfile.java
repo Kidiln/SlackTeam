@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by jacobkoikkara on 8/11/15.
+ *
+ * POJO class for storing member details.
  */
 public class SLProfile implements Serializable{
 

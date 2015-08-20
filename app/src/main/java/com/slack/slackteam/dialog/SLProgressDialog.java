@@ -6,6 +6,9 @@ import android.view.Window;
 
 import com.slack.slackteam.R;
 
+/**
+ * Dialog for showing progress
+ */
 
 public class SLProgressDialog implements SLDialog {
 

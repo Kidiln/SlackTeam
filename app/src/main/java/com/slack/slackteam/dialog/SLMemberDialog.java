@@ -11,7 +11,7 @@ import com.slack.slackteam.model.SLMember;
 import com.slack.slackteam.utils.SLUtils;
 
 /**
- * Created by jacobkoikkara on 8/14/15.
+ * Member dialog used for showing details of selected member.
  */
 public class SLMemberDialog implements SLDialog {
 
@@ -49,7 +49,6 @@ public class SLMemberDialog implements SLDialog {
 
         mSLDialog = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar);
         mSLDialog.setCancelable(true);
-//        mSLDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mSLDialog.setContentView(R.layout.dlg_slmember);
 
         txtFullName = (TextView) mSLDialog.findViewById(R.id.sl_fullname);
@@ -69,9 +68,10 @@ public class SLMemberDialog implements SLDialog {
 
     }
 
+    /**
+     * Method for updating view used in dialog layout.
+     */
     private void updateViews() {
-
-//        SLUtils.showLog(mSLMember.getProfile().getTitle());
 
         SLUtils.showLog(mSLMember.getProfile().getImage_192());
         SLUtils.showLog(mSLMember.getReal_name());
@@ -82,14 +82,6 @@ public class SLMemberDialog implements SLDialog {
         txtTimeZone.setText(appendInputToView(txtTimeZone, mSLMember.getTz()));
         txtEmail.setText(appendInputToView(txtEmail, mSLMember.getProfile().getEmail()));
 
-//        Picasso.with(mContext)
-//                .load(mSLMember.getProfile().getImage_192())
-//                .placeholder(R.drawable.empty_photo)   // optional
-//                .error(R.drawable.empty_photo)    // optional
-////                .resize(mItemHeight, mItemHeight)                        // optional
-////                .rotate(90)                             // optional
-//                .into(imgMemberIcon);
-
         // Finally load the image asynchronously into the ImageView, this also takes care of
         // setting a placeholder image while the background thread runs
         mImageFetcher.loadImage(mSLMember.getProfile().getImage_192(), imgMemberIcon);
@@ -97,6 +89,12 @@ public class SLMemberDialog implements SLDialog {
 
     }
 
+    /**
+     * Appends entry to input already present in textview.
+     * @param txtView : textview on which entry needs to be appended
+     * @param strEntry : Entry to be appended
+     * @return : returns the combined entry
+     */
     public String appendInputToView(TextView txtView, String strEntry) {
         if (strInput == null) {
             strInput = new StringBuffer(String.valueOf(txtView.getText()));

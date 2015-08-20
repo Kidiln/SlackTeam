@@ -1,5 +1,6 @@
 package com.slack.slackteam.activity;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,9 @@ import android.os.Handler;
 
 import com.slack.slackteam.R;
 
+/**
+ * Activity to display splach screen. Any global or shared preference values can be initialised here.
+ */
 public class SLSplashActivity extends Activity {
 
     private final int SPLASH_TIME = 1500;
@@ -27,6 +31,9 @@ public class SLSplashActivity extends Activity {
         initialiseValues();
     }
 
+    /**
+     * Initialising handles used for starting next activity
+     */
     private void initialiseValues() {
 
         mHandler = new Handler();
@@ -43,7 +50,9 @@ public class SLSplashActivity extends Activity {
         }
     }
 
-
+    /**
+     * Calling next activity
+     */
     private void callTeamActivity() {
 
         Intent launchIntent = new Intent(SLSplashActivity.this, SLTeamActivity.class);

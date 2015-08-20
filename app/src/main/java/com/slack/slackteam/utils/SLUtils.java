@@ -15,6 +15,9 @@ import com.slack.slackteam.R;
 
 /**
  * Created by jacobkoikkara on 8/11/15.
+ *
+ * Utils class for storing static methods to be used throught
+ *  the application
  */
 public class SLUtils {
 
@@ -27,6 +30,11 @@ public class SLUtils {
     public static Toast mToast = null;
 
 
+    /**
+     * Checking for network support
+     * @param ctx : context to be passed
+     * @return : true is network support is available.
+     */
     public static final boolean hasNetworkSupport(Context ctx) {
         PackageManager packageManager = ctx.getPackageManager();
         return (packageManager
@@ -192,6 +200,8 @@ public class SLUtils {
 
     }
 
+
+    // Methods for detecting version of OS is phone //
 
     public static boolean hasFroyo() {
         // Can use static final constants like FROYO, declared in later versions

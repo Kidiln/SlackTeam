@@ -8,7 +8,7 @@ import com.slack.slackteam.cache.ImageFetcher;
 import com.slack.slackteam.model.SLMember;
 
 /**
- * Created by jacobkoikkara on 8/14/15.
+ * Factory class for generating dialogs based on type.
  */
 public class SLDialogFactory {
 
@@ -20,6 +20,12 @@ public class SLDialogFactory {
         this.mContext = context;
     }
 
+    /**
+     * Method for showing dialog based on type passed
+     * @param dialogType : type of dialog to be shown
+     * @param imageFetcher : ImageFetcher to be passed for member dialog.
+     * @param member : Details of member to be shown in member dialog.
+     */
     public void showDialogBasedOnType(int dialogType,
                                       ImageFetcher imageFetcher, SLMember member) {
 
@@ -41,7 +47,10 @@ public class SLDialogFactory {
     }
 
 
-
+    /**
+     * Method to check if dialog is being shown
+     * @return
+     */
     public boolean isSLDialogShowing() {
 
         if (mSLDialog != null && mSLDialog.isShowing()) {
@@ -50,6 +59,9 @@ public class SLDialogFactory {
         return false;
     }
 
+    /**
+     * Method to dismiss shown dialog.
+     */
     public void dismissSLDialog() {
 
         if (mSLDialog != null && mSLDialog.isShowing()) {

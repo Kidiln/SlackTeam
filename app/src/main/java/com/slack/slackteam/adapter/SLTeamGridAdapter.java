@@ -1,5 +1,7 @@
 package com.slack.slackteam.adapter;
 
+
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,7 +18,7 @@ import com.slack.slackteam.utils.SLUtils;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by jacobkoikkara on 8/12/15.
+ * Adapter for Grid View, The layout is inflated to show member details.
  */
 public class SLTeamGridAdapter extends BaseAdapter {
 
@@ -84,6 +86,12 @@ public class SLTeamGridAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Called for setting the item member dimensions of Gridview.
+     *
+     * @param width  : width of member item.
+     * @param height : height of member item.
+     */
     public void setWidthAndHeight(int width, int height) {
 
         mWidth = width;
